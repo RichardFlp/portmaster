@@ -4,6 +4,7 @@ Fast, cross-platform port and process management for developers.
 
 [![CI](https://github.com/RichardFlp/portmaster/actions/workflows/ci.yml/badge.svg)](https://github.com/RichardFlp/portmaster/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/RichardFlp/portmaster)](https://github.com/RichardFlp/portmaster/releases)
+[![npm](https://img.shields.io/npm/v/@richard.flp/portmaster)](https://www.npmjs.com/package/@richard.flp/portmaster)
 [![License](https://img.shields.io/github/license/RichardFlp/portmaster)](LICENSE)
 
 PortMaster tells you what is using a port and lets you act on it. It detects
@@ -498,19 +499,25 @@ Run with `go test -race ./...` to include the race detector.
 Releases are built from Git tags by the `Release` workflow
 (`.github/workflows/release.yml`).
 
-1. Update `internal/version/version.go` and `CHANGELOG.md`.
+1. Update `internal/version/version.go`, `CHANGELOG.md`, the Makefile default
+   `VERSION`, and the npm package version in `npm/package.json`.
 2. Commit and push to `main`.
 3. Tag the release and push the tag:
 
 ```sh
-git tag v0.2.0
-git push origin v0.2.0
+git tag v1.1.0
+git push origin v1.1.0
 ```
 
 The workflow builds `portmaster-windows-amd64`, `portmaster-windows-arm64`,
 `portmaster-linux-amd64`, `portmaster-linux-arm64`, `portmaster-darwin-amd64`,
 and `portmaster-darwin-arm64`, generates `SHA256SUMS.txt`, and attaches
-everything to a GitHub Release.
+everything to a GitHub Release. It then publishes `@richard.flp/portmaster` to
+npm (the npm version mirrors the tag; publishing requires the `NPM_TOKEN`
+secret - a granular npm token with bypass-2FA enabled).
+
+After the release is live, update the Homebrew formula and Scoop manifest in
+`packaging/` with the new version and SHA256 hashes, then commit the change.
 
 To build all release binaries locally:
 
