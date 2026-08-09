@@ -48,8 +48,13 @@ func TestKillChildProcess(t *testing.T) {
 	if err := cmd.Start(); err != nil {
 		t.Fatal(err)
 	}
-	defer cmd.Process.Kill()
 	pid := cmd.Process.Pid
+	defer func() {
+		if cmd.ProcessState == nil {
+			cmd.Process.Kill()
+		}
+		cmd.Process.Release()
+	}()
 	if !Exists(pid) {
 		t.Fatalf("child %d should exist", pid)
 	}
@@ -59,9 +64,20 @@ func TestKillChildProcess(t *testing.T) {
 	if err := waitForExit(cmd, 5*time.Second); err != nil {
 		t.Fatalf("child did not terminate after kill: %v", err)
 	}
-	if Exists(pid) {
-		t.Error("child still exists after kill")
+	cmd.Process.Release()
+	waitForNotExists(t, pid, 5*time.Second)
+}
+
+func waitForNotExists(t *testing.T, pid int, timeout time.Duration) {
+	t.Helper()
+	deadline := time.Now().Add(timeout)
+	for time.Now().Before(deadline) {
+		if !Exists(pid) {
+			return
+		}
+		time.Sleep(100 * time.Millisecond)
 	}
+	t.Error("child still exists after kill")
 }
 
 func TestKillNonexistentPID(t *testing.T) {

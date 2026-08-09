@@ -105,13 +105,15 @@ func parseHexAddress(hex string, ipv6 bool) (string, int, bool) {
 			return "", 0, false
 		}
 		ip := make(net.IP, 16)
-		for i := 0; i < 8; i++ {
-			group, err := strconv.ParseUint(hex[idx-32+i*4:idx-28+i*4], 16, 16)
+		for i := 0; i < 4; i++ {
+			group, err := strconv.ParseUint(hex[idx-32+i*8:idx-24+i*8], 16, 32)
 			if err != nil {
 				return "", 0, false
 			}
-			ip[i*2] = byte(group >> 8)
-			ip[i*2+1] = byte(group)
+			ip[i*4] = byte(group)
+			ip[i*4+1] = byte(group >> 8)
+			ip[i*4+2] = byte(group >> 16)
+			ip[i*4+3] = byte(group >> 24)
 		}
 		return ip.String(), int(port), true
 	}

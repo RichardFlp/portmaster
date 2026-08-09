@@ -2,7 +2,10 @@
 
 package ports
 
-import "testing"
+import (
+	"os/exec"
+	"testing"
+)
 
 func TestParseLsof(t *testing.T) {
 	out := "p1234\ncnode\nn127.0.0.1:3000\n" +
@@ -31,5 +34,19 @@ func TestParseLsofEmpty(t *testing.T) {
 	ls := parseLsof("", "udp")
 	if len(ls) != 0 {
 		t.Errorf("expected no listeners, got %v", ls)
+	}
+}
+
+func TestLsofNoMatch(t *testing.T) {
+	cmd := exec.Command("lsof", "-nP", "-w", "-iTCP@127.0.0.1:1", "-sTCP:LISTEN", "-F", "pcn")
+	out, err := cmd.Output()
+	if err == nil {
+		t.Skip("lsof reported a listener on port 1; cannot verify no-match semantics")
+	}
+	if !lsofNoMatch(err) {
+		t.Errorf("lsofNoMatch(%v) = false, want true for no-match query", err)
+	}
+	if len(out) != 0 {
+		t.Errorf("expected empty output for no-match query, got %q", out)
 	}
 }

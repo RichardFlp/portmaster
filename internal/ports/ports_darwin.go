@@ -2,6 +2,7 @@ package ports
 
 import (
 	"context"
+	"errors"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -21,11 +22,19 @@ func scan() ([]Listener, error) {
 	} {
 		out, err := exec.CommandContext(ctx, "lsof", mode.args...).Output()
 		if err != nil && len(out) == 0 {
+			if lsofNoMatch(err) {
+				continue
+			}
 			return nil, err
 		}
 		result = append(result, parseLsof(string(out), mode.proto)...)
 	}
 	return result, nil
+}
+
+func lsofNoMatch(err error) bool {
+	var ee *exec.ExitError
+	return errors.As(err, &ee) && ee.ExitCode() == 1
 }
 
 func parseLsof(out, proto string) []Listener {
