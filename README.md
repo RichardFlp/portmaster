@@ -68,7 +68,7 @@ re-download the binary.
 ### Go
 
 ```sh
-go install github.com/RichardFlp/portmaster@latest
+go install github.com/RichardFlp/portmaster/cmd/portmaster@latest
 ```
 
 The binary is installed to `$(go env GOPATH)/bin/portmaster`. Make sure that
