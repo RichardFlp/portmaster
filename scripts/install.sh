@@ -40,14 +40,14 @@ main() {
   tmp=$(mktemp -d)
   trap 'rm -rf "$tmp"' EXIT
   echo "Downloading $binary"
-  curl -fsSL -o "$tmp/portmaster" "$(release_url "$binary")"
+  curl -fsSL -o "$tmp/$binary" "$(release_url "$binary")"
   curl -fsSL -o "$tmp/SHA256SUMS.txt" "$(release_url "SHA256SUMS.txt")"
   (cd "$tmp" && sha256sum -c --ignore-missing SHA256SUMS.txt) >/dev/null
-  chmod +x "$tmp/portmaster"
+  chmod +x "$tmp/$binary"
   if [ -w /usr/local/bin ]; then
-    install -m 0755 "$tmp/portmaster" "$BIN"
+    install -m 0755 "$tmp/$binary" "$BIN"
   else
-    sudo install -m 0755 "$tmp/portmaster" "$BIN"
+    sudo install -m 0755 "$tmp/$binary" "$BIN"
   fi
   echo "Installed portmaster to $BIN"
 }
