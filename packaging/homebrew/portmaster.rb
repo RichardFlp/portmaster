@@ -1,8 +1,8 @@
 class Portmaster < Formula
   desc "Fast, cross-platform port and process management for developers"
   homepage "https://github.com/RichardFlp/portmaster"
-  url "https://github.com/RichardFlp/portmaster/archive/refs/tags/v1.0.0.tar.gz"
-  sha256 "503b4fd86c8c4b220644d57018ee60cfcc1534a5701f5947a6d2335fd293253a"
+  url "https://github.com/RichardFlp/portmaster/archive/refs/tags/v1.1.0.tar.gz"
+  sha256 "f26e84cf008ef8362e84b717b212f1ffed9ca25fe0a782f88957a9198264b843"
   license "MIT"
 
   depends_on "go" => :build
