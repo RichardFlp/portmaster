@@ -72,4 +72,13 @@ else:
 open(p, "w").write(text)
 PY
 
+if ! grep -q "var Version = \"$version\"" "$root/internal/version/version.go"; then
+  echo "failed to bump internal/version/version.go" >&2
+  exit 1
+fi
+if ! grep -q "^VERSION ?= $version$" "$root/Makefile"; then
+  echo "failed to bump Makefile" >&2
+  exit 1
+fi
+
 echo "bumped version files to $version"

@@ -76,4 +76,13 @@ text = re.sub(
 open(p, "w").write(text)
 PY
 
+if ! grep -q "archive/refs/tags/v$version.tar.gz" "$root/packaging/homebrew/portmaster.rb"; then
+  echo "failed to update homebrew url" >&2
+  exit 1
+fi
+if ! grep -q "sha256 \"$srcsha\"" "$root/packaging/homebrew/portmaster.rb"; then
+  echo "failed to update homebrew sha256" >&2
+  exit 1
+fi
+
 echo "updated packaging manifests to $version"
