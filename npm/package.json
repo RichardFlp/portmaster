@@ -1,0 +1,46 @@
+{
+  "name": "portmaster-cli",
+  "version": "1.0.0",
+  "description": "Cross-platform CLI for managing ports and processes (PortMaster)",
+  "license": "MIT",
+  "bin": {
+    "portmaster-cli": "bin/portmaster-cli.js"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "README.md"
+  ],
+  "scripts": {
+    "install": "node scripts/install.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "win32",
+    "darwin",
+    "linux"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "keywords": [
+    "port",
+    "ports",
+    "process",
+    "cli",
+    "netstat",
+    "lsof",
+    "dev-tools"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RichardFlp/portmaster.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RichardFlp/portmaster/issues"
+  },
+  "homepage": "https://github.com/RichardFlp/portmaster"
+}

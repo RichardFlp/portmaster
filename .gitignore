@@ -8,6 +8,7 @@ Thumbs.db
 .vscode/
 .idea/
 bin/
+!npm/bin/
 dist/
 build/
 coverage/
@@ -15,3 +16,5 @@ coverage.out
 *.test
 *.exe
 *.prof
+npm/vendor/
+npm/package-lock.json

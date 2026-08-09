@@ -51,6 +51,19 @@ operation.
 
 ## Installation
 
+### npm
+
+Requires Node.js 18+ (used only to download the binary). The correct binary
+for your platform is downloaded from the matching GitHub release and verified
+against its SHA256 checksum.
+
+```sh
+npm install -g portmaster-cli
+```
+
+The command is `portmaster-cli`. Run `npm rebuild -g portmaster-cli` to
+re-download the binary.
+
 ### Go
 
 ```sh
