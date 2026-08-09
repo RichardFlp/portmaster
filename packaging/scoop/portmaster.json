@@ -1,15 +1,15 @@
 {
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Fast, cross-platform port and process management for developers",
   "homepage": "https://github.com/RichardFlp/portmaster",
   "license": "MIT",
   "architecture": {
     "64bit": {
-      "url": "https://github.com/RichardFlp/portmaster/releases/download/v0.1.0/portmaster-windows-amd64.exe",
+      "url": "https://github.com/RichardFlp/portmaster/releases/download/v1.0.0/portmaster-windows-amd64.exe",
       "hash": "REPLACE_WITH_SHA256"
     },
     "arm64": {
-      "url": "https://github.com/RichardFlp/portmaster/releases/download/v0.1.0/portmaster-windows-arm64.exe",
+      "url": "https://github.com/RichardFlp/portmaster/releases/download/v1.0.0/portmaster-windows-arm64.exe",
       "hash": "REPLACE_WITH_SHA256"
     }
   },

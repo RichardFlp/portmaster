@@ -1,5 +1,5 @@
 BINARY  := portmaster
-VERSION ?= 0.1.0
+VERSION ?= 1.0.0
 MODULE  := github.com/RichardFlp/portmaster
 LDFLAGS := -s -w -X $(MODULE)/internal/version.Version=$(VERSION)
 
