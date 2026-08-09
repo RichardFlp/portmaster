@@ -1,10 +1,11 @@
 {
-  "name": "portmaster-cli",
-  "version": "1.0.0",
+  "name": "@richardflp/portmaster",
+  "version": "1.1.0",
   "description": "Cross-platform CLI for managing ports and processes (PortMaster)",
   "license": "MIT",
   "bin": {
-    "portmaster-cli": "bin/portmaster-cli.js"
+    "portmaster": "bin/portmaster.js",
+    "portmaster-cli": "bin/portmaster.js"
   },
   "files": [
     "bin/",

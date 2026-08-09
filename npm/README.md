@@ -1,4 +1,4 @@
-# portmaster-cli
+# @richardflp/portmaster
 
 npm distribution of [PortMaster](https://github.com/RichardFlp/portmaster), a
 fast, cross-platform CLI for managing ports and processes.
@@ -11,27 +11,29 @@ matching [GitHub release](https://github.com/RichardFlp/portmaster/releases)
 during install and verified against its SHA256 checksum.
 
 ```sh
-npm install -g portmaster-cli
+npm install -g @richardflp/portmaster
 ```
 
 ## Usage
 
 ```sh
-portmaster-cli             # list listening ports
-portmaster-cli 3000        # inspect port 3000
-portmaster-cli free 3000   # find a free port at or above 3000
-portmaster-cli kill 3000   # terminate the process using port 3000
-portmaster-cli ui          # interactive terminal UI
+portmaster             # list listening ports
+portmaster 3000        # inspect port 3000
+portmaster free 3000   # find a free port at or above 3000
+portmaster kill 3000   # terminate the process using port 3000
+portmaster ui          # interactive terminal UI
 ```
 
-Run `portmaster-cli help` for the full command reference.
+Run `portmaster help` for the full command reference.
 
 ## Notes
 
 - Supported platforms: Windows, macOS, Linux on amd64 and arm64.
 - The package itself contains no compiled code; the binary is downloaded at
-  install time. To re-download, run `npm rebuild -g portmaster-cli`.
+  install time. To re-download, run `npm rebuild -g @richardflp/portmaster`.
 - In restricted networks, set `PORTMASTER_BINARY_MIRROR` to a mirror of the
   GitHub releases before installing.
+- `portmaster-cli` is installed as an alias for compatibility with the
+  previous package name.
 - Same exit codes and behavior as the native binary. See the
   [main README](https://github.com/RichardFlp/portmaster) for details.

@@ -23,7 +23,7 @@ const EXT = process.platform === 'win32' ? '.exe' : '';
 
 if (!GOOS || !GOARCH) {
   console.error(
-    `portmaster-cli: platform ${process.platform}-${os.arch()} is not supported. ` +
+    `portmaster: platform ${process.platform}-${os.arch()} is not supported. ` +
       'Supported: Windows/macOS/Linux on amd64 and arm64.'
   );
   process.exit(1);
@@ -77,10 +77,10 @@ async function main() {
   writeFileSync(target, binary);
   if (EXT !== '.exe') chmodSync(target, 0o755);
 
-  console.log(`portmaster-cli: installed ${asset} (v${pkg.version})`);
+  console.log(`portmaster: installed ${asset} (v${pkg.version})`);
 }
 
 main().catch((err) => {
-  console.error(`portmaster-cli: install failed: ${err.message}`);
+  console.error(`portmaster: install failed: ${err.message}`);
   process.exit(1);
 });

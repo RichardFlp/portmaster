@@ -10,8 +10,8 @@ const binary = path.join(__dirname, '..', 'vendor', `portmaster${ext}`);
 
 if (!existsSync(binary)) {
   console.error(
-    'portmaster-cli: binary is missing. Re-run `npm install -g portmaster-cli`' +
-      ' (or `npm rebuild portmaster-cli`) to download it.'
+    'portmaster: binary is missing. Re-run `npm install -g @richardflp/portmaster`' +
+      ' (or `npm rebuild -g @richardflp/portmaster`) to download it.'
   );
   process.exit(1);
 }
@@ -19,7 +19,7 @@ if (!existsSync(binary)) {
 const child = spawn(binary, process.argv.slice(2), { stdio: 'inherit' });
 
 child.on('error', (err) => {
-  console.error(`portmaster-cli: failed to launch binary: ${err.message}`);
+  console.error(`portmaster: failed to launch binary: ${err.message}`);
   process.exit(1);
 });
 
