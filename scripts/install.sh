@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -eu
+# pipefail is a bash/zsh extension; enable it only where supported so the
+# script also runs under POSIX sh (e.g. dash on Debian/Ubuntu).
+if [ -n "${BASH_VERSION:-}" ] || [ -n "${ZSH_VERSION:-}" ]; then
+  set -o pipefail
+fi
 
 REPO="RichardFlp/portmaster"
 BIN="/usr/local/bin/portmaster"
