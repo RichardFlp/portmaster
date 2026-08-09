@@ -6,11 +6,11 @@
   "architecture": {
     "64bit": {
       "url": "https://github.com/RichardFlp/portmaster/releases/download/v1.0.0/portmaster-windows-amd64.exe",
-      "hash": "REPLACE_WITH_SHA256"
+      "hash": "2cff8baec201b7dcabd9e214d6da6e2998417333dcafdca663a7559f97b99301"
     },
     "arm64": {
       "url": "https://github.com/RichardFlp/portmaster/releases/download/v1.0.0/portmaster-windows-arm64.exe",
-      "hash": "REPLACE_WITH_SHA256"
+      "hash": "33463ded91e9a04ae25b06967d4d20e581752fa0314f0a53bbcbc102c3e73714"
     }
   },
   "bin": [["portmaster-windows-amd64.exe", "portmaster"]],
