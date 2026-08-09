@@ -3,6 +3,7 @@ package ports
 import (
 	"net"
 	"testing"
+	"time"
 )
 
 func TestSplitAddress(t *testing.T) {
@@ -94,13 +95,7 @@ func TestListFindsBoundTCP(t *testing.T) {
 	}
 	defer ln.Close()
 	port := ln.Addr().(*net.TCPAddr).Port
-	ls, err := List()
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !containsListener(ls, port, "tcp") {
-		t.Errorf("List() missing bound tcp port %d", port)
-	}
+	waitForListener(t, port, "tcp")
 }
 
 func TestListFindsBoundUDP(t *testing.T) {
@@ -110,13 +105,23 @@ func TestListFindsBoundUDP(t *testing.T) {
 	}
 	defer pc.Close()
 	port := pc.LocalAddr().(*net.UDPAddr).Port
-	ls, err := List()
-	if err != nil {
-		t.Fatal(err)
+	waitForListener(t, port, "udp")
+}
+
+func waitForListener(t *testing.T, port int, proto string) {
+	t.Helper()
+	deadline := time.Now().Add(5 * time.Second)
+	for time.Now().Before(deadline) {
+		ls, err := List()
+		if err != nil {
+			t.Fatalf("scan failed: %v", err)
+		}
+		if containsListener(ls, port, proto) {
+			return
+		}
+		time.Sleep(100 * time.Millisecond)
 	}
-	if !containsListener(ls, port, "udp") {
-		t.Errorf("List() missing bound udp port %d", port)
-	}
+	t.Fatalf("List() never reported bound %s port %d", proto, port)
 }
 
 func TestListSortedByPort(t *testing.T) {

@@ -1,13 +1,13 @@
 package processes
 
 import (
+	"encoding/binary"
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
 	"time"
-
-	"golang.org/x/sys/unix"
+	"unsafe"
 )
 
 func lookup(pid int) (Info, error) {
@@ -52,11 +52,30 @@ func cmdline(pid int) string {
 	return strings.Join(parts, " ")
 }
 
+const atClktck = 17
+
 func clockTicksPerSecond() int64 {
-	if hz, err := unix.Sysconf(unix._SC_CLK_TCK); err == nil && hz > 0 {
-		return hz
+	data, err := os.ReadFile("/proc/self/auxv")
+	if err != nil {
+		return 100
+	}
+	word := int(unsafe.Sizeof(uintptr(0)))
+	for i := 0; i+word*2 <= len(data); i += word * 2 {
+		if nativeUint(data[i:i+word], word) != atClktck {
+			continue
+		}
+		if hz := nativeUint(data[i+word:i+word*2], word); hz > 0 {
+			return int64(hz)
+		}
 	}
 	return 100
+}
+
+func nativeUint(b []byte, word int) uint64 {
+	if word == 8 {
+		return binary.NativeEndian.Uint64(b)
+	}
+	return uint64(binary.NativeEndian.Uint32(b))
 }
 
 func bootTime() (int64, bool) {

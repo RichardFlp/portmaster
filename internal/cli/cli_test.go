@@ -460,6 +460,7 @@ func TestRunKill(t *testing.T) {
 	if err := waitForChildExit(child, 5*time.Second); err != nil {
 		t.Fatalf("child did not terminate after forced kill: %v", err)
 	}
+	waitForPortGone(t, port, 5*time.Second)
 	code, _, errOut = execCLI(t, []string{"kill", strconv.Itoa(port), "--force"}, nil, nil)
 	if code != ExitNotFound {
 		t.Errorf("kill of dead port code = %d, want %d (%s)", code, ExitNotFound, errOut)
@@ -654,6 +655,29 @@ func TestParsePortArg(t *testing.T) {
 			t.Errorf("parsePortArg(%q) succeeded", bad)
 		}
 	}
+}
+
+func waitForPortGone(t *testing.T, port int, timeout time.Duration) {
+	t.Helper()
+	deadline := time.Now().Add(timeout)
+	for time.Now().Before(deadline) {
+		ls, err := ports.List()
+		if err != nil {
+			t.Fatalf("scan failed: %v", err)
+		}
+		found := false
+		for _, l := range ls {
+			if l.Port == port {
+				found = true
+				break
+			}
+		}
+		if !found {
+			return
+		}
+		time.Sleep(200 * time.Millisecond)
+	}
+	t.Fatalf("port %d still visible %v after process exit", port, timeout)
 }
 
 func waitForChildExit(cmd *exec.Cmd, timeout time.Duration) error {

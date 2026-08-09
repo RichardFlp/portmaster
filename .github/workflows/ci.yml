@@ -30,6 +30,36 @@ jobs:
       - name: Vet
         run: go vet ./...
       - name: Test
-        run: go test ./...
+        shell: bash
+        run: |
+          set -o pipefail
+          go test -count=1 -v ./... 2>&1 | tee test.log
+      - name: Upload test log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-log-${{ matrix.os }}-${{ matrix.go }}
+          path: test.log
+          if-no-files-found: ignore
       - name: Build
         run: go build ./...
+
+  race:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+      - name: Race tests
+        shell: bash
+        run: |
+          set -o pipefail
+          go test -count=1 -race ./... 2>&1 | tee race.log
+      - name: Upload race log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: race-log
+          path: race.log
+          if-no-files-found: ignore

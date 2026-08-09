@@ -20,7 +20,7 @@ func scan() ([]Listener, error) {
 		{[]string{"-nP", "-w", "-iUDP", "-F", "pcn"}, "udp"},
 	} {
 		out, err := exec.CommandContext(ctx, "lsof", mode.args...).Output()
-		if err != nil {
+		if err != nil && len(out) == 0 {
 			return nil, err
 		}
 		result = append(result, parseLsof(string(out), mode.proto)...)
