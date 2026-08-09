@@ -1,16 +1,16 @@
 {
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Fast, cross-platform port and process management for developers",
   "homepage": "https://github.com/RichardFlp/portmaster",
   "license": "MIT",
   "architecture": {
     "64bit": {
-      "url": "https://github.com/RichardFlp/portmaster/releases/download/v1.1.0/portmaster-windows-amd64.exe",
-      "hash": "00f26dc63db43f24157688ba1e5084982b04cccac6f27a2bd1c9686008bb2822"
+      "url": "https://github.com/RichardFlp/portmaster/releases/download/v1.1.1/portmaster-windows-amd64.exe",
+      "hash": "78332704297289aad5c6af98ad0344dd3d8f99bed03bad9fa63c3eb52d563499"
     },
     "arm64": {
-      "url": "https://github.com/RichardFlp/portmaster/releases/download/v1.1.0/portmaster-windows-arm64.exe",
-      "hash": "dc861bda0ec77fcc299fd1e3b390c0b98e842facc47ab2675963895e23165402"
+      "url": "https://github.com/RichardFlp/portmaster/releases/download/v1.1.1/portmaster-windows-arm64.exe",
+      "hash": "75da62d908321b495889da1b744843aaf0c05d5576b6599d108aa03dbff27a58"
     }
   },
   "bin": [["portmaster-windows-amd64.exe", "portmaster"]],
