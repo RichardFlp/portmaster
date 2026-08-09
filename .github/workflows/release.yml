@@ -29,7 +29,7 @@ jobs:
             goarch: arm64
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-go@v5
         with:
           go-version: "1.25"
@@ -51,6 +51,15 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v5
+      - name: Bump version files to match the tag
+        run: |
+          ./scripts/bump-version.sh "${GITHUB_REF_NAME#v}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Release $GITHUB_REF_NAME"
+          git push origin HEAD:main
       - uses: actions/download-artifact@v4
         with:
           path: dist
@@ -62,12 +71,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
         run: gh release create "$GITHUB_REF_NAME" dist/* --title "$GITHUB_REF_NAME" --generate-notes
+      - name: Update packaging manifests
+        run: |
+          ./scripts/update-packaging.sh "${GITHUB_REF_NAME#v}"
+          git add -A
+          git commit -m "Update packaging manifests to $GITHUB_REF_NAME"
+          git push origin HEAD:main
   publish-npm:
     needs: release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"

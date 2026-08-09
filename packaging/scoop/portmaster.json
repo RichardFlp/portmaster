@@ -13,7 +13,12 @@
       "hash": "75da62d908321b495889da1b744843aaf0c05d5576b6599d108aa03dbff27a58"
     }
   },
-  "bin": [["portmaster-windows-amd64.exe", "portmaster"]],
+  "bin": [
+    [
+      "portmaster-windows-amd64.exe",
+      "portmaster"
+    ]
+  ],
   "checkver": {
     "github": "https://github.com/RichardFlp/portmaster"
   },
