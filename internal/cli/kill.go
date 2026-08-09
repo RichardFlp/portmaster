@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"runtime"
 	"strings"
 	"syscall"
 
@@ -94,7 +95,7 @@ func (a *app) cmdKill(args []string) int {
 			targets = append(targets, t)
 		}
 		if len(targets) == 0 {
-			return a.fail(ExitError, "no owning process found for port %d", port)
+			return a.fail(ExitError, "no owning process found for port %d\nhint: %s", port, noOwnerHint(port))
 		}
 	} else {
 		return a.fail(ExitUsage, "kill requires a port or --pid")
@@ -159,6 +160,17 @@ func (a *app) confirm(prompt string) bool {
 	}
 	answer := strings.ToLower(strings.TrimSpace(line))
 	return answer == "y" || answer == "yes"
+}
+
+// noOwnerHint explains why a listener's process could not be identified and
+// how to gain the privileges needed to terminate it. This typically happens
+// when the listener is owned by another user, for example a system service.
+func noOwnerHint(port int) string {
+	base := "the process may be owned by another user (e.g. a system service)"
+	if runtime.GOOS == "windows" {
+		return base + ". Run portmaster from an Administrator terminal to kill it."
+	}
+	return fmt.Sprintf("%s. Try: sudo portmaster kill %d", base, port)
 }
 
 func isPermissionError(err error) bool {

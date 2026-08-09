@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"testing"
@@ -490,6 +491,22 @@ func TestRunKillRefusesSelf(t *testing.T) {
 	}
 	if !strings.Contains(errOut, "refusing") {
 		t.Errorf("self kill message missing:\n%s", errOut)
+	}
+}
+
+func TestNoOwnerHint(t *testing.T) {
+	hint := noOwnerHint(9050)
+	if runtime.GOOS == "windows" {
+		if !strings.Contains(hint, "Administrator") {
+			t.Errorf("windows hint missing Administrator: %q", hint)
+		}
+	} else {
+		if !strings.Contains(hint, "sudo portmaster kill 9050") {
+			t.Errorf("unix hint missing sudo command: %q", hint)
+		}
+	}
+	if !strings.Contains(hint, "system service") {
+		t.Errorf("hint missing explanation: %q", hint)
 	}
 }
 
