@@ -10,8 +10,8 @@ const binary = path.join(__dirname, '..', 'vendor', `portmaster${ext}`);
 
 if (!existsSync(binary)) {
   console.error(
-    'portmaster: binary is missing. Re-run `npm install -g @richardflp/portmaster`' +
-      ' (or `npm rebuild -g @richardflp/portmaster`) to download it.'
+    'portmaster: binary is missing. Re-run `npm install -g @richard.flp/portmaster`' +
+      ' (or `npm rebuild -g @richard.flp/portmaster`) to download it.'
   );
   process.exit(1);
 }

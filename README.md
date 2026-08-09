@@ -58,10 +58,10 @@ for your platform is downloaded from the matching GitHub release and verified
 against its SHA256 checksum.
 
 ```sh
-npm install -g @richardflp/portmaster
+npm install -g @richard.flp/portmaster
 ```
 
-The command is `portmaster`. Run `npm rebuild -g @richardflp/portmaster` to
+The command is `portmaster`. Run `npm rebuild -g @richard.flp/portmaster` to
 re-download the binary.
 
 ### Go

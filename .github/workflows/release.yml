@@ -71,7 +71,7 @@ jobs:
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
-      - name: Publish @richardflp/portmaster to npm
+      - name: Publish @richard.flp/portmaster to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |

@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- npm distribution under `@richardflp/portmaster` with a `portmaster` command
+- npm distribution under `@richard.flp/portmaster` with a `portmaster` command
   (the previous `portmaster-cli` name is installed as an alias).
 - Auto-publish of the npm package from the Release workflow.
 
